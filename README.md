@@ -1,6 +1,6 @@
 # sigstore-keycloak-setup
 
-A guide for setting up Sigstore with Keycloak as an identity provider
+A guide for setting up Sigstore with Keycloak as an identity provider as in [Sigstore the Hard Way](https://sthw.decodebytes.sh/).
 
 ## Getting started
 
