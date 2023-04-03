@@ -155,8 +155,8 @@ Start the Keycloak server with the following command:
 
 ```
 sudo bin/kc.sh start \
---https-certificate-file=/etc/letsencrypt/live/keycloak.sigstore-keycloak-test.com/cert.pem \
---https-certificate-key-file=/etc/letsencrypt/live/keycloak.sigstore-keycloak-test.com/privkey.pem \
+--https-certificate-file=/etc/letsencrypt/live/keycloak.example.com/cert.pem \
+--https-certificate-key-file=/etc/letsencrypt/live/keycloak.example.com/privkey.pem \
 --hostname-strict=false \
 --proxy=edge \
 --https-port=8080
