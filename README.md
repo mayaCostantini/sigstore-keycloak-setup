@@ -10,7 +10,7 @@ It is a replacement for the [step 5](https://sthw.decodebytes.sh/05-dex.html) of
 Keycloak is an open source Identity and Access Management solution that provides OpenID Connect capabilities.
 The following steps assume that steps 1-4 from the Sigstore The Hard Way tutorial were successfully completed.
 
-1. Provision an instance for the Keycloak server
+### 1. Provision an instance for the Keycloak server
 
 As in the [step 2](https://sthw.decodebytes.sh/02-compute-resources.html) of Sigstore the Hard Way, provision an instance for the Keycloak server:
 
@@ -42,7 +42,7 @@ gcloud compute instances add-access-config VM_NAME \
    --access-config-name="ACCESS_CONFIG_NAME" --address=IP_ADDRESS
 ```
 
-2. Configure DNS resolution
+### 2. Configure DNS resolution
 
 If not done already, configure a `keycloak` subdomain for your domain name (for example: `keycloak.example.com`).
 Follow the same steps as in the [Domain Configuration](https://sthw.decodebytes.sh/03-domain-configuration.html#configuration) section of STHW for the `keycloak` subdomain.
@@ -50,7 +50,7 @@ Follow the same steps as in the [Domain Configuration](https://sthw.decodebytes.
 In the Google Cloud console, ensure the subdomain resolves to the reserved static IP address configured by going to `Network Services` > `Cloud DNS` and selccting your zone.
 Select the corresponding subdomain and verify that the IP address is correct.
 
-3. Deploy Keycloak
+### 3. Deploy Keycloak
 
 To start deploying Keycloak, ssh into your instance:
 
@@ -65,7 +65,7 @@ sudo apt-get update -y
 sudo apt-get install wget unzip
 ```
 
-3.1 Install Keycloak on your server
+#### 3.1 Install Keycloak on your server
 
 Note: This guide shows how to deploy Keycloak as a standalone server, but it is also possible to start the server as a [container](https://www.keycloak.org/server/containers).
 
@@ -83,7 +83,7 @@ Decompress the file:
 unzip keycloak-21.0.2.zip
 ```
 
-3.2 Configure Let's Encrypt and HAproxy
+#### 3.2 Configure Let's Encrypt and HAproxy
 
 Follow the same [steps](https://sthw.decodebytes.sh/06-fulcio.html#lets-encrypt-tls--ha-proxy-config) from STHW to configure TLS with Let's Encrypt for your domain, replacing the `$DOMAIN` name with your `keycloak` subdomain.
 The HAproxy configuration is similar to the one described in the tutorial, except for the `haproxy.cfg` file that must override request headers to work with Keycloak.
@@ -147,7 +147,7 @@ Verify that the service is running:
 sudo systemctl status haproxy.service
 ```
 
-3.3 Start the Keycloak server
+#### 3.3 Start the Keycloak server
 
 Go to the `keycloak-{version number}` directory extracted from step 3.1.
 To intialize the admin user, set the `KEYCLOAK_ADMIN` and `KEYCLOAK_ADMIN_PASSWORD` environment variables.
@@ -192,9 +192,9 @@ Within a few seconds, the Keycloak server should be running and listening on por
 2023-04-03 08:43:05,091 INFO  [io.quarkus] (main) Installed features: [agroal, cdi, hibernate-orm, jdbc-h2, jdbc-mariadb, jdbc-mssql, jdbc-mysql, jdbc-oracle, jdbc-postgresql, keycloak, logging-gelf, micrometer, narayana-jta, reactive-routes, resteasy, resteasy-jackson, smallrye-context-propagation, smallrye-health, vertx]
 ```
 
-4. Configure the Sigstore OIDC client
+### 4. Configure the Sigstore OIDC client
 
-4.1 Create the Sigstore realm
+#### 4.1 Create the Sigstore realm
 
 Once the Keycloak server is started, go to your Keycloak domain on your local machine browser.
 Connect as the admin user by going to the `Administration Console` and entering the configured admin username and password.
@@ -208,7 +208,7 @@ Create the `sigstore` realm by clicking on `Create realm` in the top left menu, 
 ![](assets/create_realm.png)
 
 
-4.2 Configure the Sigstore client
+#### 4.2 Configure the Sigstore client
 
 In the `Clients` section, select `Create client`.
 In `General settings`, select `OpenID Connect` for the client type, and `sigstore` for the client ID.
@@ -232,7 +232,7 @@ Set `Add to ID token` as `On`.
 
 Note: In the `Credentials` section for the client, you will find the OIDC client secret you can pass to Sigstore to get an identity token. The client ID must always be `sigstore`.
 
-4.3 Create a `sigstore` user
+#### 4.3 Create a `sigstore` user
 
 In the `Users` tab, select `Add user`.
 Leave `Required user actions` blank, add `sigstore` as a username and enter the email you want to sign artifacts with. Set `Email verified` to `On`.
@@ -240,7 +240,7 @@ Then go to the `Credentials` tab and configure a password for the `sigstore` use
 
 Log out from the admin console.
 
-5. Configure Fulcio to accept tokens from Keycloak
+### 5. Configure Fulcio to accept tokens from Keycloak
 
 The next step is to add your Keycloak server as a recognized identity provider to your Fulcio instance configuration.
 For the Fulcio server to start, it is necessary that all the identity providers specified in the configuration are up and running.
@@ -266,7 +266,7 @@ Insert the configuration for your Keycloak server in `config.json`:
 
 Make sure your Keycloak instance is reachable at the configured URL and start the Fulcio server as specified in the tutorial.
 
-6. Sign an artifact
+### 6. Sign an artifact
 
 Your custom Sigstore instance should now be up and ready for use.
 To verify if everything has been set up correctly, follow the cosign set up from STHW [step 10](https://sthw.decodebytes.sh/10-sign-container.html) and run `cosign sign` with options as follows:
