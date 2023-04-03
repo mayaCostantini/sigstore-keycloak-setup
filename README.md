@@ -88,7 +88,7 @@ unzip keycloak-21.0.2.zip
 Follow the same [steps](https://sthw.decodebytes.sh/06-fulcio.html#lets-encrypt-tls--ha-proxy-config) from STHW to configure TLS with Let's Encrypt for your domain, replacing the `$DOMAIN` name with your `keycloak` subdomain.
 The HAproxy configuration is similar to the one described in the tutorial, except for the `haproxy.cfg` file that must override request headers to work with Keycloak.
 
-In place of the file from the tutorial, write the following configuration for `haproxy.cfg`:
+In place of the file from the tutorial, write the following configuration for `haproxy.cfg` (replacing `10.240.0.12` with your instance internal IP address):
 
 ```
 defaults
