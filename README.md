@@ -47,7 +47,7 @@ gcloud compute instances add-access-config VM_NAME \
 If not done already, configure a `keycloak` subdomain for your domain name (for example: `keycloak.example.com`).
 Follow the same steps as in the [Domain Configuration](https://sthw.decodebytes.sh/03-domain-configuration.html#configuration) section of STHW for the `keycloak` subdomain.
 
-In the Google Cloud console, ensure the subdomain resolves to the reserved static IP address configured by going to `Network Services` > `Cloud DNS` and selccting your zone.
+In the Google Cloud console, ensure the subdomain resolves to the reserved static IP address configured by going to `Network Services` > `Cloud DNS` and selecting your zone.
 Select the corresponding subdomain and verify that the IP address is correct.
 
 ### 3. Deploy Keycloak
